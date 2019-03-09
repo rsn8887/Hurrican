@@ -10,6 +10,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(USE_SDL2)
+#include "sdl2_to_sdl1.h"
+#endif
 #include "DX8Joystick.h"
 #include "Logdatei.h"
 #include "Gameplay.h"
@@ -113,10 +116,10 @@ void DirectJoystickClass::StopForceFeedbackEffect(int nr)
 #if defined(PLATFORM_DIRECTX)
 bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 {
-   HRESULT             dirval;           // Rückgabewert
+   HRESULT             dirval;           // Rï¿½ckgabewert
    DIPROPRANGE         diprg;            // Joystick Eigenschaften
 
-	// Joystick für enumerierte GUID erstellen
+	// Joystick fï¿½r enumerierte GUID erstellen
 	dirval = lpDI->CreateDevice(guidJoystickDevice,&lpDIJoystick, NULL);
 	if (dirval != DI_OK)
 	{
@@ -125,7 +128,7 @@ bool DirectJoystickClass::Init(HWND hwnd, LPDIRECTINPUT8 lpDI)
 	}
 	Protokoll.WriteText("Joystick : CreateDevice successfull!\n", false);
 
-	// Datenformat für Joystick festlegen
+	// Datenformat fï¿½r Joystick festlegen
 	dirval = lpDIJoystick->SetDataFormat(&c_dfDIJoystick2);
 	if (dirval != DI_OK)
 	{

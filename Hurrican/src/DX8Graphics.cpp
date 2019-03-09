@@ -6,7 +6,7 @@
 // zum initialisieren von DirectX8
 // beinhaltet zudem verschiedene Grafik-Funktionen zum Speichern von Screenshots usw
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 Jï¿½rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -14,6 +14,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(USE_SDL2)
+#include "sdl2_to_sdl1.h"
+#endif
 #include <time.h>
 #include <stdexcept>
 #include <string>
@@ -103,7 +106,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 	d3dpp.AutoDepthStencilFormat			= D3DFMT_D16;
 	d3dpp.hDeviceWindow						= hwnd;							// Fenster Handle
 	d3dpp.BackBufferWidth					= dwBreite;					    // ScreenBreite
-	d3dpp.BackBufferHeight					= dwHoehe;					    // Screenhöhe
+	d3dpp.BackBufferHeight					= dwHoehe;					    // Screenhï¿½he
 	d3dpp.BackBufferFormat					= D3DFMT_X8R8G8B8;
 
 	d3dpp.SwapEffect	= D3DSWAPEFFECT_COPY_VSYNC;		// VSync an
@@ -204,7 +207,7 @@ _ModeFound:
 		SquareOnly = false;
 	}
 
-	// Device kann nur Texturen mit 2er-Potenz-Grösse
+	// Device kann nur Texturen mit 2er-Potenz-Grï¿½sse
 	if (d3dCaps.TextureCaps & D3DPTEXTURECAPS_POW2)
 	{
 		Protokoll.WriteText("Power of Two: TRUE\n", false);
@@ -220,7 +223,7 @@ _ModeFound:
 
 	Protokoll.WriteText("\n-> Direct3D init successfull!\n\n", false);
 
-	// DegreetoRad-Tabelle füllen
+	// DegreetoRad-Tabelle fï¿½llen
 	for(int i=0; i<360; i++)
 		DegreetoRad[i] = float(PI * i / 180);
 
@@ -303,7 +306,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 
 	Protokoll.WriteText("\n-> OpenGL init successfull!\n\n", false);
 
-	// DegreetoRad-Tabelle füllen
+	// DegreetoRad-Tabelle fï¿½llen
 	for(int i=0; i<360; i++)
 		DegreetoRad[i] = float(PI * i / 180);
 
@@ -338,8 +341,8 @@ bool DirectGraphicsClass::Exit(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Infos für Device Objekt setzen
-// Für Init und nach Task Wechsel
+// Infos fï¿½r Device Objekt setzen
+// Fï¿½r Init und nach Task Wechsel
 // --------------------------------------------------------------------------------------
 
 bool DirectGraphicsClass::SetDeviceInfo(void)
@@ -347,7 +350,7 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
 #if defined(PLATFORM_DIRECTX)
 	HRESULT hr;
 
-	// Globale Variable mit dem tatsächlichen BackBuffer füllen
+	// Globale Variable mit dem tatsï¿½chlichen BackBuffer fï¿½llen
 	lpD3DDevice->GetBackBuffer(0, D3DBACKBUFFER_TYPE_MONO, &lpBackbuffer);
 
    // Licht, Cullmodus und Z-Buffer aktivieren
@@ -459,7 +462,7 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 {
 #if defined(PLATFORM_DIRECTX)
 	FILE*				f = NULL;					// Datei
-	HRESULT				hr;							// Für Fehler-Prüfung
+	HRESULT				hr;							// Fï¿½r Fehler-Prï¿½fung
 	IDirect3DSurface8*	FrontBuffer;				// Zeiger auf Frontbuffer
 
 	// Surface erzeugen, in die das Bild kopiert wird
@@ -476,7 +479,7 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 		return false;
 	}
 
-	// BMP Datei erzeugen, wobei bereits existierende Dateien nicht überschrieben werden
+	// BMP Datei erzeugen, wobei bereits existierende Dateien nicht ï¿½berschrieben werden
 	// so entstehen dann Screenshot000 - Screenshot999
 
 	char	TempName[100];
@@ -524,7 +527,7 @@ bool DirectGraphicsClass::TakeScreenshot(const char Filename[100], int screenx, 
 }
 
 // --------------------------------------------------------------------------------------
-// Renderstates für Sprites mit ColorKey setzen
+// Renderstates fï¿½r Sprites mit ColorKey setzen
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetColorKeyMode(void)
@@ -543,7 +546,7 @@ void DirectGraphicsClass::SetColorKeyMode(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Renderstates für Sprites setzen, die komplett weiss gerendert werden
+// Renderstates fï¿½r Sprites setzen, die komplett weiss gerendert werden
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetWhiteMode(void)
@@ -562,7 +565,7 @@ void DirectGraphicsClass::SetWhiteMode(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Renderstates für Sprites mit Additivem Alphablending setzen
+// Renderstates fï¿½r Sprites mit Additivem Alphablending setzen
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetAdditiveMode(void)
@@ -581,12 +584,12 @@ void DirectGraphicsClass::SetAdditiveMode(void)
 }
 
 // --------------------------------------------------------------------------------------
-// Renderstates für linearen Texturfilter ein/ausschalten
+// Renderstates fï¿½r linearen Texturfilter ein/ausschalten
 // --------------------------------------------------------------------------------------
 
 void DirectGraphicsClass::SetFilterMode (bool filteron)
 {
-	// Filter schon an? Dann nichts ändern
+	// Filter schon an? Dann nichts ï¿½ndern
 	//
 
 	if (filteron == FilterMode)

@@ -1,6 +1,10 @@
 #ifndef _KEYMAP_H_
 #define _KEYMAP_H_
 
+#if defined(USE_SDL2)
+#include "sdl2_to_sdl1.h"
+#endif
+
 #define DIK_ESCAPE          SDLK_ESCAPE
 #define DIK_1               SDLK_1
 #define DIK_2               SDLK_2

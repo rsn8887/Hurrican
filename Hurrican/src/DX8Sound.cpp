@@ -3,10 +3,10 @@
 // --------------------------------------------------------------------------------------
 //
 // SoundManager
-// zum Abspielen von Wave-Dateien und Musikstücken mit Hilfe der FMOD Library
+// zum Abspielen von Wave-Dateien und Musikstï¿½cken mit Hilfe der FMOD Library
 //
 //
-// (c) 2002 Jörg M. Winterstein
+// (c) 2002 Jï¿½rg M. Winterstein
 //
 // --------------------------------------------------------------------------------------
 
@@ -14,6 +14,9 @@
 // Include Dateien
 // --------------------------------------------------------------------------------------
 
+#if defined(USE_SDL2)
+#include "sdl2_to_sdl1.h"
+#endif
 #include <stdio.h>
 #include "DX8Sound.h"
 #include "Logdatei.h"
@@ -31,7 +34,7 @@
 //-----------------------------------------------------------------------------
 // Name			: GetFMODErrorString
 // Aufgabe		: FMOD Error-Wert in String umwandeln
-// Rückgabewert	: String mit Error-Text
+// Rï¿½ckgabewert	: String mit Error-Text
 // Parameter	: FMOD Error-Wert
 //-----------------------------------------------------------------------------
 
@@ -69,7 +72,7 @@ char *GetFMODErrorString(int ErrorNr)
 #if defined(PLATFORM_DIRECTX)
 	ReturnString = ErrorString;
 #elif defined(PLATFORM_SDL)
-    ReturnString = Mix_GetError();
+    ReturnString = (char *)Mix_GetError();
 #endif
 
 	return ReturnString;
@@ -82,7 +85,7 @@ char *GetFMODErrorString(int ErrorNr)
 //---------------------------------------------------------------------------------------
 // Name			: CSong (Konstruktor)
 // Aufgabe		: Song initialisieren
-// Rückgabewert	: Keiner
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -94,7 +97,7 @@ CSong::CSong()
 //---------------------------------------------------------------------------------------
 // Name			: CSong (Destruktor)
 // Aufgabe		: Song initialisieren
-// Rückgabewert	: Keiner
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -110,7 +113,7 @@ CSong::~CSong()
 //---------------------------------------------------------------------------------------
 // Name			: Update
 // Aufgabe		: Songs ggf faden
-// Rückgabewert	: Keiner
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -127,7 +130,7 @@ bool CSong::Update(void)
 	{
 		Volume += FadingVolume SYNC;
 
-		// Grenze Überschritten ?
+		// Grenze ï¿½berschritten ?
 		if ((FadingVolume > 0.0f &&
 		 	 Volume >= FadingEnd) ||
 
@@ -159,7 +162,7 @@ bool CSong::Update(void)
 //---------------------------------------------------------------------------------------
 // Name			: CWave (Konstruktor)
 // Aufgabe		: Sound initialisieren
-// Rückgabewert	: Keiner
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -174,8 +177,8 @@ CWave::CWave()
 
 //---------------------------------------------------------------------------------------
 // Name			: ~CWave (Destruktor)
-// Aufgabe		: Sound löschen
-// Rückgabewert	: Keiner
+// Aufgabe		: Sound lï¿½schen
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -190,8 +193,8 @@ CWave::~CWave()
 
 //---------------------------------------------------------------------------------------
 // Name			: Update
-// Aufgabe		: Channel prüfen
-// Rückgabewert	: Keiner
+// Aufgabe		: Channel prï¿½fen
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -218,7 +221,7 @@ bool CWave::Update()
 		//
 		case FADEMODE_IN:
 		{
-			// Volume erhöhen
+			// Volume erhï¿½hen
 			//
 			vol += 30.0f SYNC;
 
@@ -230,7 +233,7 @@ bool CWave::Update()
 				FadeMode = FADEMODE_FULL;
 			}
 
-			// Lautstärke setzen
+			// Lautstï¿½rke setzen
 			//
 			SOUND_SetVolume(Channel, (int)vol);
 		}
@@ -271,8 +274,8 @@ bool CWave::Update()
 
 //---------------------------------------------------------------------------------------
 // Name			: CSoundManager (Konstruktor)
-// Aufgabe		: Standardmässige Initialisierung
-// Rückgabewert	: Keiner
+// Aufgabe		: Standardmï¿½ssige Initialisierung
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -308,9 +311,9 @@ CSoundManager::CSoundManager()
 }; // Konstruktor
 
 //---------------------------------------------------------------------------------------
-// Name			: CSoundManager (Überladener Konstruktor)
-// Aufgabe		: Initialisierung mit übergebenen Parametern
-// Rückgabewert	: Keiner
+// Name			: CSoundManager (ï¿½berladener Konstruktor)
+// Aufgabe		: Initialisierung mit ï¿½bergebenen Parametern
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -339,13 +342,13 @@ CSoundManager::CSoundManager   (SOUNDMANAGER_PARAMETERS smpp)
 	{
 		Protokoll.WriteText("\n-> Create Sound Manager failed !\n", true);
 	}
-}; // Überladener Konstruktor
+}; // ï¿½berladener Konstruktor
 
 
 //---------------------------------------------------------------------------------------
 // Name			: ~CSoundManager (Destruktor)
 // Aufgabe		: Songs freigeben
-// Rückgabewert	: Keiner
+// Rï¿½ckgabewert	: Keiner
 // Parameter	: Keine
 //---------------------------------------------------------------------------------------
 
@@ -385,7 +388,7 @@ CSoundManager::~CSoundManager()
 //---------------------------------------------------------------------------------------
 // Name			: InitFMOD
 // Aufgabe		: FMOD Initialisieren
-// Rückgabewert	: true bei Erfolg, false bei nicht-Erfolg
+// Rï¿½ckgabewert	: true bei Erfolg, false bei nicht-Erfolg
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 
@@ -419,9 +422,9 @@ bool CSoundManager::InitFMOD(SOUNDMANAGER_PARAMETERS smpp)
 //---------------------------------------------------------------------------------------
 // Name			: SetVolumes
 // Aufgabe		: neue globale Volumes setzen
-// Rückgabewert	: keiner
-// Parameter	: Sound		neue Sound-Lautstärke
-//				  Musik		neue Musik-Lautstärke
+// Rï¿½ckgabewert	: keiner
+// Parameter	: Sound		neue Sound-Lautstï¿½rke
+//				  Musik		neue Musik-Lautstï¿½rke
 //---------------------------------------------------------------------------------------
 
 void CSoundManager::SetVolumes(float Sound, float Musik)
@@ -433,7 +436,7 @@ void CSoundManager::SetVolumes(float Sound, float Musik)
 //---------------------------------------------------------------------------------------
 // Name			: LoadSong
 // Aufgabe		: Song laden
-// Rückgabewert	: Liefert Integer Wert der Arraypos des Songs zurück, -1 bei Fehler
+// Rï¿½ckgabewert	: Liefert Integer Wert der Arraypos des Songs zurï¿½ck, -1 bei Fehler
 // Parameter	: Filename	Name des zu ladenden Songs
 //---------------------------------------------------------------------------------------
 
@@ -537,7 +540,7 @@ loadfile:
 //---------------------------------------------------------------------------------------
 // Name			: PlaySong
 // Aufgabe		: Song abspielen
-// Rückgabewert	: keiner
+// Rï¿½ckgabewert	: keiner
 // Parameter	: Nr		Array-Nummer des Songs
 //				  Paused	Neu starten oder Pause aufheben
 //---------------------------------------------------------------------------------------
@@ -570,7 +573,7 @@ bool CSoundManager::PlaySong(int Nr, bool Paused)
 //---------------------------------------------------------------------------------------
 // Name			: StopSong
 // Aufgabe		: Song anhalten
-// Rückgabewert	: false, wenn der Song nicht exisitert, sonst true
+// Rï¿½ckgabewert	: false, wenn der Song nicht exisitert, sonst true
 // Parameter	: Nr		Array-Nummer des Songs
 //				  Paused	Ganz anhalten oder pausieren
 //---------------------------------------------------------------------------------------
@@ -593,7 +596,7 @@ bool CSoundManager::StopSong(int Nr, bool Paused)
 //---------------------------------------------------------------------------------------
 // Name			: StopAllSongs
 // Aufgabe		: Alle gespielten Songs werden angehalten
-// Rückgabewert	: keiner
+// Rï¿½ckgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
 void CSoundManager::StopAllSongs(bool Paused)
@@ -607,7 +610,7 @@ void CSoundManager::StopAllSongs(bool Paused)
 //---------------------------------------------------------------------------------------
 // Name			: StopAllLoopedSounds
 // Aufgabe		: Alle geloopten Sounds stoppen
-// Rückgabewert	: keiner
+// Rï¿½ckgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
 void CSoundManager::StopAllLoopedSounds(void)
@@ -621,7 +624,7 @@ void CSoundManager::StopAllLoopedSounds(void)
 //---------------------------------------------------------------------------------------
 // Name			: StopAllLoopedSounds
 // Aufgabe		: Alle geloopten Sounds stoppen
-// Rückgabewert	: keiner
+// Rï¿½ckgabewert	: keiner
 //---------------------------------------------------------------------------------------
 
 void CSoundManager::StopAllSounds(void)
@@ -633,10 +636,10 @@ void CSoundManager::StopAllSounds(void)
 
 //---------------------------------------------------------------------------------------
 // Name			: SetSongVolume
-// Aufgabe		: Lautstärke eines Songs setzen
-// Rückgabewert	: keiner
+// Aufgabe		: Lautstï¿½rke eines Songs setzen
+// Rï¿½ckgabewert	: keiner
 // Parameter	: Nr		Array-Nummer des Songs
-//				  Volume	Zu setzende Lautstärke
+//				  Volume	Zu setzende Lautstï¿½rke
 //---------------------------------------------------------------------------------------
 
 void CSoundManager::SetSongVolume(int Nr, float Volume)
@@ -650,10 +653,10 @@ void CSoundManager::SetSongVolume(int Nr, float Volume)
 
 //---------------------------------------------------------------------------------------
 // Name			: SetAbsoluteSongVolume
-// Aufgabe		: aboslute Lautstärke eines Songs setzen
-// Rückgabewert	: keiner
+// Aufgabe		: aboslute Lautstï¿½rke eines Songs setzen
+// Rï¿½ckgabewert	: keiner
 // Parameter	: Nr		Array-Nummer des Songs
-//				  Volume	Zu setzende Lautstärke
+//				  Volume	Zu setzende Lautstï¿½rke
 //---------------------------------------------------------------------------------------
 
 void CSoundManager::SetAbsoluteSongVolume(int Nr, float Volume)
@@ -667,8 +670,8 @@ void CSoundManager::SetAbsoluteSongVolume(int Nr, float Volume)
 
 //---------------------------------------------------------------------------------------
 // Name			: SetAllSongVolumes
-// Aufgabe		: Lautstärke aller Songs setzen
-// Rückgabewert	: keiner
+// Aufgabe		: Lautstï¿½rke aller Songs setzen
+// Rï¿½ckgabewert	: keiner
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 
@@ -681,8 +684,8 @@ void CSoundManager::SetAllSongVolumes(void)
 
 //---------------------------------------------------------------------------------------
 // Name			: Update
-// Aufgabe		: Songs bei Bedarf faden und benutzte Channels zählen usw
-// Rückgabewert	: keiner
+// Aufgabe		: Songs bei Bedarf faden und benutzte Channels zï¿½hlen usw
+// Rï¿½ckgabewert	: keiner
 // Parameter	: keine
 //---------------------------------------------------------------------------------------
 
@@ -703,7 +706,7 @@ void CSoundManager::Update(void)
 		if (its_Songs[i] != NULL)
 			its_Songs[i]->Update();
 
-	// Anzahl benutzter Channels zählen
+	// Anzahl benutzter Channels zï¿½hlen
 	//
 	ChannelsUsed = 0;
 
@@ -715,8 +718,8 @@ void CSoundManager::Update(void)
 
 //---------------------------------------------------------------------------------------
 // Name			: FadeSong
-// Aufgabe		: Fadet einen Song ein/aus und hält danach an bzw pausiert
-// Rückgabewert	: keiner
+// Aufgabe		: Fadet einen Song ein/aus und hï¿½lt danach an bzw pausiert
+// Rï¿½ckgabewert	: keiner
 // Parameter	: Nr			Nummer des Songs
 //				  Speed			Geschwindigkeit und Richtung des Fades
 //				  End			Grenze des Fadens
@@ -741,7 +744,7 @@ void CSoundManager::FadeSong(int Nr, float Speed, int End, bool Paused)
 //---------------------------------------------------------------------------------------
 // Name			: FadeWave
 // Aufgabe		: Wave ein/ausfadem
-// Rückgabewert	: keiner
+// Rï¿½ckgabewert	: keiner
 // Parameter	: Nr			Nummer des Waves
 //				  Mode			FadeMode
 //---------------------------------------------------------------------------------------
@@ -768,8 +771,8 @@ void CSoundManager::FadeWave(int Nr, int Mode)
 
 //---------------------------------------------------------------------------------------
 // Name			: LoadWave
-// Aufgabe		: Lädt eine Wave Datei
-// Rückgabewert	: Nr der Wavedatei im Array
+// Aufgabe		: Lï¿½dt eine Wave Datei
+// Rï¿½ckgabewert	: Nr der Wavedatei im Array
 // Parameter	: Filename		Dateiname der Wave
 //---------------------------------------------------------------------------------------
 
@@ -848,7 +851,7 @@ loadfile:
 		free(pData);
 	}
 
-	// Temp Datei wieder löschen und Speicher freigeben
+	// Temp Datei wieder lï¿½schen und Speicher freigeben
 	//DeleteFile("temp.dat");
 	//free(pData);
 
@@ -901,7 +904,7 @@ loadfile:
 //---------------------------------------------------------------------------------------
 // Name			: PlayWave
 // Aufgabe		: Spielt eine Wave Datei
-// Rückgabewert	: true, wenn der Sound gespielt wurde, sonst false
+// Rï¿½ckgabewert	: true, wenn der Sound gespielt wurde, sonst false
 // Parameter	: Nr des Sounds im Array
 //---------------------------------------------------------------------------------------
 
@@ -912,7 +915,7 @@ bool CSoundManager::PlayWave(int Vol, int Pan, int Freq, int Nr)
 
 	int Channel;		// Benutzter Channel
 
-	// hört man den Sound überhaupt ?
+	// hï¿½rt man den Sound ï¿½berhaupt ?
 	//
 	if(Vol == 0 ||
 		its_GlobalSoundVolume == 0)
@@ -933,7 +936,7 @@ bool CSoundManager::PlayWave(int Vol, int Pan, int Freq, int Nr)
 	its_Sounds[Nr]->Channel   = Channel;
 	its_Sounds[Nr]->isPlaying = true;;
 
-	// Und Werte für den Channel, in dem er gespielt wird, setzen
+	// Und Werte fï¿½r den Channel, in dem er gespielt wird, setzen
 	//
 	SOUND_SetFrequency(Channel, Freq);
 	SOUND_SetVolume   (Channel, int(its_GlobalSoundVolume*Vol/100.0f*2.55f));
@@ -945,8 +948,8 @@ bool CSoundManager::PlayWave(int Vol, int Pan, int Freq, int Nr)
 //---------------------------------------------------------------------------------------
 // Name			: PlayWave3D
 // Aufgabe		: Spielt eine Wave Datei, je nach Spieler Abstand lauter oder leiser
-//				  und setzt das panning entsprechend der Position der Geräuschquelle
-// Rückgabewert	: true, wenn der Sound gespielt wurde, sonst false
+//				  und setzt das panning entsprechend der Position der Gerï¿½uschquelle
+// Rï¿½ckgabewert	: true, wenn der Sound gespielt wurde, sonst false
 // Parameter	: Nr des Sounds im Array
 //---------------------------------------------------------------------------------------
 
@@ -986,7 +989,7 @@ bool CSoundManager::PlayWave3D(int x, int y, int Freq, int Nr)
 } // PlaySound
 
 // --------------------------------------------------------------------------------------
-// Lautstärke eines 3D sounds ändern
+// Lautstï¿½rke eines 3D sounds ï¿½ndern
 // --------------------------------------------------------------------------------------
 
 void CSoundManager::Update3D (int x, int y, int Nr)

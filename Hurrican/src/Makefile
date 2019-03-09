@@ -1,6 +1,6 @@
 DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG -DDEBUG
 
-TARGET = rpi
+TARGET = switch
 
 ifeq ($(TARGET),aros)
 
@@ -89,9 +89,76 @@ LDFLAGS := -g -lSDL -lGLESv2 -lSDL_mixer -lSDL_image -lmodplug -lX11 -lEGL
 
 endif
 
+ifeq ($(TARGET),switch)
+
+#AR = $(PREFIX)-ar
+#RANLIB = $(PREFIX)-ranlib
+
+PROJECT_NAME := hurrican
+VERSION := 1.0
+PREFIX := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf
+CCP := $(PREFIX)-gcc
+CC  := $(PREFIX)-gcc
+LD  := $(PREFIX)-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+
+DEFINES += \
+        -ffunction-sections \
+        -ffast-math -march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIC \
+        -fno-rtti \
+        -DPLATFORM_SDL \
+        -DUSE_SDL2 \
+        -DLINUX \
+        -DUSE_GL2 \
+        -DUSE_GLES2 \
+        -DUSE_EGL_RAW \
+        -DUSE_MODPLUG \
+        -D__SWITCH__
+#        -Wl,-q -Wall -Wno-unused-variable -O3
+
+INCLUDES_OS := \
+        -I$(DEVKITPRO)/portlibs/switch/include/SDL2 \
+        -I$(DEVKITPRO)/portlibs/switch/include/GLES2 \
+        -I$(DEVKITPRO)/portlibs/switch/include/libmodplug \
+        -I$(DEVKITPRO)/portlibs/switch/include \
+        -I$(DEVKITPRO)/libnx/include \
+
+
+LDFLAGS := \
+        $(DEFINES)\
+        -specs=$(DEVKITPRO)/libnx/switch.specs \
+        -L$(DEVKITPRO)/libnx/lib \
+        -L$(DEVKITPRO)/portlibs/switch/lib \
+        -lSDL2_image \
+        -lSDL2_mixer \
+        -lSDL2_net \
+        -lSDL2 \
+        -lEGL \
+        -lGLESv2 \
+        -lglapi \
+        -ldrm_nouveau \
+        -lnx \
+        -lm \
+        -lvorbisidec \
+        -logg \
+        -lmodplug \
+        -lmpg123 \
+        -lflac \
+        -ljpeg \
+        -lfreetype \
+        -lc \
+        -lpng16 \
+        -lz \
+        -lstdc++
+
+endif
+
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
 
-CFLAGS := -g -Wall -O0 -c $(INCLUDES) $(DEFINES)
+CFLAGS := -O0 -c $(INCLUDES) $(DEFINES)
 
 SDL_FILES := SDLPort/SDL_fmod \
              SDLPort/SDL_port \
@@ -105,7 +172,8 @@ GL2_FILES := SDLPort/cshader
 
 UNRAR_FILES := unrarlib040/unrarlib/unrarlib
 
-FILES :=Boss_BigFish \
+FILES := sdl2_to_sdl1 \
+        Boss_BigFish \
         Boss_Bratklops \
         Boss_Drache \
         Boss_EisFaust \
@@ -308,6 +376,25 @@ $(EXE) : $(ALL_OBJS)
 	$(CC) $(CFLAGS) $< -o $@
 
 .PHONY : clean
+
+ifeq ($(TARGET),switch)
+all: $(ALL_OBJS) $(PROJECT_NAME).nro
+$(PROJECT_NAME).nro: $(PROJECT_NAME).elf
+	$(DEVKITPRO)/tools/bin/nacptool --create "$(PROGBASE)" "rsn8887" "$(VERSION)" $(PROJECT_NAME).nacp
+	$(DEVKITPRO)/tools/bin/elf2nro $(PROJECT_NAME).elf $(PROJECT_NAME).nro --icon=../switchdata/icon0.jpg --nacp=$(PROJECT_NAME).nacp
+
+$(PROJECT_NAME).elf: $(ALL_OBJS)
+	$(LD) $^ $(LDFLAGS) -o $@
+
+$(PROJECT_NAME)_switch.zip: ../$(PROJECT_NAME).nro
+    rm -rf ../release/${PROJECT_NAME}
+    mkdir -p ../release/
+    mkdir ../release/${PROJECT_NAME}
+    cp -f ${PROJECT_NAME}.nro ../release/${PROJECT_NAME}/${PROJECT_NAME}.nro
+    cp -rf ../data ../release/${PROJECT_NAME}/
+    cd ../release && zip -r ../${PROJECT_NAME}_${VERSION}_switch.zip ${PROJECT_NAME} && cd ../
+  )
+endif
 
 clean :
 	$(RM) $(ALL_OBJS) $(EXE)

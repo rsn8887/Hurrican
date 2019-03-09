@@ -3,7 +3,7 @@
 //---------------------------------------------------------------------------------------
 //
 // Erleichtert das Abfragen von Tasten-Namen mit DInput
-// von Jörg Matthias Winterstein
+// von Jï¿½rg Matthias Winterstein
 //
 // (c) 2002 Poke53280
 //
@@ -23,8 +23,8 @@
 
 //---------------------------------------------------------------------------------------
 // Funktion		: GetKeyName
-// Beschreibung : Liefert einen String mit dem Names des als Parameter übergebenen
-//				  DirectInput Keyboard Scan Codes zurück
+// Beschreibung : Liefert einen String mit dem Names des als Parameter ï¿½bergebenen
+//				  DirectInput Keyboard Scan Codes zurï¿½ck
 //---------------------------------------------------------------------------------------
 
 const char *GetKeyName(int DIK_Code)
@@ -44,8 +44,8 @@ const char *GetKeyName(int DIK_Code)
 		case DIK_8               : Text = "8";							break;
 		case DIK_9               : Text = "9";							break;
 		case DIK_0               : Text = "0";							break;
-		case DIK_MINUS           : Text = "ß";							break;
-		case DIK_EQUALS          : Text = "´";							break;
+		case DIK_MINUS           : Text = "ï¿½";							break;
+		case DIK_EQUALS          : Text = "ï¿½";							break;
 		case DIK_BACK            : Text = "Backspace";					break;
 		case DIK_TAB             : Text = "Tab";						break;
 		case DIK_Q               : Text = "Q";							break;
@@ -197,5 +197,5 @@ const char *GetKeyName(int DIK_Code)
 	DirectInput.lpDIKeyboard->GetProperty(DIPROP_KEYNAME, (LPDIPROPHEADER) &str);
 #endif
 
-	return Text;								// Und den Name der Taste zurückliefern
+	return Text;								// Und den Name der Taste zurï¿½ckliefern
 }
