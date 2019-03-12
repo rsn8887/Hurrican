@@ -105,55 +105,59 @@ RM  := rm -f
 USE_EGL := yes
 USE_GL2 := yes
 
-DEFINES += \
-        -ffunction-sections \
-        -ffast-math -march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIC \
-        -fno-rtti \
-        -DPLATFORM_SDL \
-        -DUSE_SDL2 \
-        -DLINUX \
-        -DUSE_GL2 \
-        -DUSE_GLES2 \
-        -DUSE_EGL_RAW \
-        -DUSE_MODPLUG \
-        -D__SWITCH__
+DEFINES = \
+		-DPLATFORM_SDL \
+		-DENABLE_CONSOLE_COMMANDS \
+		-DDEBUG \
+		-ffunction-sections \
+		-ffast-math \
+		-march=armv8-a \
+		-mtune=cortex-a57 \
+		-mtp=soft \
+		-fPIC \
+		-fno-rtti \
+		-DUSE_SDL2 \
+		-D__SWITCH__ \
+		-DUSE_GL2 \
+		-DUSE_GLES2 \
+		-DUSE_EGL_RAW
 #        -Wl,-q -Wall -Wno-unused-variable -O3
+#		-DLINUX
 
 INCLUDES_OS := \
-        -I$(DEVKITPRO)/portlibs/switch/include/SDL2 \
-        -I$(DEVKITPRO)/portlibs/switch/include/GLES2 \
-        -I$(DEVKITPRO)/portlibs/switch/include/libmodplug \
-        -I$(DEVKITPRO)/portlibs/switch/include \
-        -I$(DEVKITPRO)/libnx/include \
+		-I$(DEVKITPRO)/portlibs/switch/include/SDL2 \
+		-I$(DEVKITPRO)/portlibs/switch/include/GLES2 \
+		-I$(DEVKITPRO)/portlibs/switch/include/libmodplug \
+		-I$(DEVKITPRO)/portlibs/switch/include \
+		-I$(DEVKITPRO)/libnx/include \
 
 
 LDFLAGS := \
-        $(DEFINES)\
-        -specs=$(DEVKITPRO)/libnx/switch.specs \
-        -L$(DEVKITPRO)/libnx/lib \
-        -L$(DEVKITPRO)/portlibs/switch/lib \
-        -lSDL2_image \
-        -lSDL2_mixer \
-        -lSDL2_net \
-        -lSDL2 \
-        -lEGL \
-        -lGLESv2 \
-        -lglapi \
-        -ldrm_nouveau \
-        -lnx \
-        -lm \
-        -lvorbisidec \
-        -logg \
-        -lmodplug \
-        -lmpg123 \
-        -lflac \
-        -ljpeg \
-        -lfreetype \
-        -lc \
-        -lpng16 \
-        -lz \
-        -lstdc++
-
+		$(DEFINES)\
+		-specs=$(DEVKITPRO)/libnx/switch.specs \
+		-L$(DEVKITPRO)/libnx/lib \
+		-L$(DEVKITPRO)/portlibs/switch/lib \
+		-lSDL2_image \
+		-lSDL2_mixer \
+		-lSDL2_net \
+		-lSDL2 \
+		-lEGL \
+		-lGLESv2 \
+		-lglapi \
+		-ldrm_nouveau \
+		-lnx \
+		-lm \
+		-lvorbisidec \
+		-logg \
+		-lmodplug \
+		-lmpg123 \
+		-lflac \
+		-ljpeg \
+		-lfreetype \
+		-lc \
+		-lpng16 \
+		-lz \
+		-lstdc++
 endif
 
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
@@ -380,20 +384,20 @@ $(EXE) : $(ALL_OBJS)
 ifeq ($(TARGET),switch)
 all: $(ALL_OBJS) $(PROJECT_NAME).nro
 $(PROJECT_NAME).nro: $(PROJECT_NAME).elf
-	$(DEVKITPRO)/tools/bin/nacptool --create "$(PROGBASE)" "rsn8887" "$(VERSION)" $(PROJECT_NAME).nacp
+	$(DEVKITPRO)/tools/bin/nacptool --create "$(PROJECT_NAME)" "rsn8887" "$(VERSION)" $(PROJECT_NAME).nacp
 	$(DEVKITPRO)/tools/bin/elf2nro $(PROJECT_NAME).elf $(PROJECT_NAME).nro --icon=../switchdata/icon0.jpg --nacp=$(PROJECT_NAME).nacp
 
 $(PROJECT_NAME).elf: $(ALL_OBJS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
-$(PROJECT_NAME)_switch.zip: ../$(PROJECT_NAME).nro
-    rm -rf ../release/${PROJECT_NAME}
-    mkdir -p ../release/
-    mkdir ../release/${PROJECT_NAME}
-    cp -f ${PROJECT_NAME}.nro ../release/${PROJECT_NAME}/${PROJECT_NAME}.nro
-    cp -rf ../data ../release/${PROJECT_NAME}/
-    cd ../release && zip -r ../${PROJECT_NAME}_${VERSION}_switch.zip ${PROJECT_NAME} && cd ../
-  )
+$(PROJECT_NAME)_switch.zip: $(PROJECT_NAME).nro
+	rm -rf ../release
+	mkdir -p ../release
+	mkdir -p ../release/${PROJECT_NAME}
+	cp -f ${PROJECT_NAME}.nro ../release/${PROJECT_NAME}/${PROJECT_NAME}.nro
+	cp -rf ../data ../release/${PROJECT_NAME}/
+	cp -rf ../lang ../release/${PROJECT_NAME}/
+	cd ../release && zip -r ../${PROJECT_NAME}_${VERSION}_switch.zip ${PROJECT_NAME} && cd ../
 endif
 
 clean :

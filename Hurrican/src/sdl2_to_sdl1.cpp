@@ -77,7 +77,7 @@ SDL_Surface *SDL_SetVideoMode(int w, int h, int bpp, int flags) {
 	}
 
 	if (!renderer) {
-		window = SDL_CreateWindow("uae4all2", 0, 0, display_width, display_height, 0);
+		window = SDL_CreateWindow("uae4all2", 0, 0, display_width, display_height, SDL_WINDOW_OPENGL);
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE | SDL_RENDERER_PRESENTVSYNC);
 		SDL_RenderClear(renderer);
 		// only used to get a valid alpha format
@@ -194,5 +194,10 @@ int SDL_VideoModeOK(int w, int h, int bpp, Uint32 flags) {
 
 SDL_Surface* SDL_GetVideoSurface(void) {
 	return switch_screen_surface;
+}
+
+void SDL_GL_SwapBuffers(void) {
+	if (window)
+		SDL_GL_SwapWindow(window);
 }
 #endif

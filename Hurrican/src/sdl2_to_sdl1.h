@@ -30,6 +30,7 @@ extern SDL_Surface *alpha_format_source;
 #define SDL_SRCCOLORKEY	0x00001000	/**< Blit uses a source color key */
 #define SDL_RLEACCELOK	0x00002000	/**< Private flag */
 #define SDL_SRCALPHA	0x00010000	/**< Blit uses source alpha blending */
+#define SDL_OPENGL 0
 #define KMOD_META KMOD_GUI
 #define SDLK_KP0 SDLK_KP_0
 #define SDLK_KP1 SDLK_KP_1
@@ -69,5 +70,6 @@ int Surface_HasBlendMode(const SDL_Surface* surf);
 SDL_BlendMode Surface_GetBlendMode(const SDL_Surface* surf);
 int SDL_VideoModeOK(int w, int h, int bpp, Uint32 flags);
 SDL_Surface* SDL_GetVideoSurface(void);
+void SDL_GL_SwapBuffers(void);
 #endif
 #endif

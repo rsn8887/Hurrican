@@ -15,7 +15,7 @@
 // Defines
 // --------------------------------------------------------------------------------------
 
-#ifndef _DEBUG
+#if !defined(_DEBUG) && !defined(__SWITCH__)
 #define SHOW_CRACKTRO
 #endif
 
