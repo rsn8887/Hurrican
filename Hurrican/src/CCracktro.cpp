@@ -248,7 +248,12 @@ void CCracktro::Main(void)
     {
         ScrollOffset -= l;
         ScrollPos++;
-
+#ifdef __SWITCH__
+        if (ScrollPos < 0)
+        {
+            ScrollPos = 0;
+        }
+#endif
         if ((unsigned int)ScrollPos > strlen(CrackText) - 50)
             ScrollPos = 0;
     }
@@ -326,7 +331,12 @@ void CCracktro::Main(void)
     {
         ScrollOffset2 -= l;
         ScrollPos2++;
-
+#ifdef __SWITCH__
+        if (ScrollPos2 < 0)
+        {
+            ScrollPos2 = 0;
+        }
+#endif
         if ((unsigned int)ScrollPos2 > strlen(StaticText) - 50)
             ScrollPos2 = 0;
     }

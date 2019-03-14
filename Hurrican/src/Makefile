@@ -12,7 +12,7 @@
 # pandora     : Pandora handheld (OpenGLES2)
 
 ifndef TARGET
-TARGET := s905
+TARGET := switch
 endif
 
 
@@ -61,6 +61,75 @@ DEFINES += -DUSE_INDEXED_BATCH
 
 # *** END OPTIONAL DEFINES ***
 
+ifeq ($(TARGET),switch)
+
+#AR = $(PREFIX)-ar
+#RANLIB = $(PREFIX)-ranlib
+
+PROJECT_NAME := hurrican
+VERSION := 1.0
+PREFIX := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf
+CXX := $(PREFIX)-g++
+CC  := $(PREFIX)-gcc
+LD  := $(PREFIX)-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+USE_NO_EXCEPTIONS := yes
+
+DEFINES = -DUSE_INDEXED_BATCH \
+		-DPLATFORM_SDL \
+		-DENABLE_CONSOLE_COMMANDS \
+		-DDEBUG \
+		-march=armv8-a+crc+crypto \
+		-mtune=cortex-a57 \
+		-mtp=soft \
+		-fPIC \
+		-ftls-model=local-exec \
+		-O2 \
+		-ffunction-sections \
+		-fdata-sections \
+		-std=c++17 \
+		-D__SWITCH__ \
+		-DUSE_GLES2
+#		-DUSE_MODPLUG
+#		-DS905
+#        -Wl,-q -Wall -Wno-unused-variable -O3
+#		-DLINUX
+#		-DUSE_EGL_RAW
+
+INCLUDES_OS := \
+		-ISDL_port \
+		-I$(DEVKITPRO)/portlibs/switch/include/SDL2 \
+		-I$(DEVKITPRO)/portlibs/switch/include/GLES2 \
+		-I$(DEVKITPRO)/portlibs/switch/include \
+		-I$(DEVKITPRO)/libnx/include
+
+LDFLAGS := \
+		$(DEFINES) \
+		-specs=$(DEVKITPRO)/libnx/switch.specs \
+		-L$(DEVKITPRO)/libnx/lib \
+		-L$(DEVKITPRO)/portlibs/switch/lib \
+		-lSDL2_image \
+		-lSDL2_mixer \
+		-lSDL2_net \
+		-lSDL2 \
+		-lEGL \
+		-lGLESv2 \
+		-lglapi \
+		-ldrm_nouveau \
+		-lnx \
+		-lm \
+		-lvorbisidec \
+		-logg \
+		-lmodplug \
+		-lmpg123 \
+		-lflac \
+		-ljpeg \
+		-lpng16 \
+		-lz
+endif
 
 ifeq ($(TARGET),mingw)
 
@@ -529,6 +598,25 @@ $(EXE) : $(ALL_OBJS)
 	$(CC) $(CFLAGS) $< -o $@
 
 .PHONY : clean
+
+ifeq ($(TARGET),switch)
+all: $(ALL_OBJS) $(PROJECT_NAME).nro
+$(PROJECT_NAME).nro: $(PROJECT_NAME).elf
+	$(DEVKITPRO)/tools/bin/nacptool --create "$(PROJECT_NAME)" "rsn8887" "$(VERSION)" $(PROJECT_NAME).nacp
+	$(DEVKITPRO)/tools/bin/elf2nro $(PROJECT_NAME).elf $(PROJECT_NAME).nro --icon=../switchdata/icon0.jpg --nacp=$(PROJECT_NAME).nacp
+
+$(PROJECT_NAME).elf: $(ALL_OBJS)
+	$(LD) $^ $(LDFLAGS) -o $@
+
+$(PROJECT_NAME)_switch.zip: $(PROJECT_NAME).nro
+	rm -rf ../release
+	mkdir -p ../release
+	mkdir -p ../release/${PROJECT_NAME}
+	cp -f ${PROJECT_NAME}.nro ../release/${PROJECT_NAME}/${PROJECT_NAME}.nro
+	cp -rf ../data ../release/${PROJECT_NAME}/
+	cp -rf ../lang ../release/${PROJECT_NAME}/
+	cd ../release && zip -r ../${PROJECT_NAME}_${VERSION}_switch.zip ${PROJECT_NAME} && cd ../
+endif
 
 clean :
 	$(RM) *.o SDLPort/*.o unrarlib040/unrarlib/*.o $(EXE)
