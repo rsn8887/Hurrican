@@ -49,6 +49,97 @@ int fbdev = -1;
 #include "bcm_host.h"
 #endif /* PANDORA */
 
+#if defined(__SWITCH__)
+#include <switch.h>
+#include "sdl2_to_sdl1.h"
+extern SDL_Window *window;
+// need all these internal structures from SDL2 just to get the native EGL Window
+typedef struct SDL_WindowUserData
+{
+    char *name;
+    void *data;
+    struct SDL_WindowUserData *next;
+} SDL_WindowUserData;
+
+typedef struct SDL_WindowShaper
+{
+    /* The window associated with the shaper */
+    SDL_Window *window;
+
+    /* The user's specified coordinates for the window, for once we give it a shape. */
+    Uint32 userx,usery;
+
+    /* The parameters for shape calculation. */
+    SDL_WindowShapeMode mode;
+
+    /* Has this window been assigned a shape? */
+    SDL_bool hasshape;
+
+    void *driverdata;
+} SDL_WindowShaper;
+
+typedef struct SDL_Window
+{
+    const void *magic;
+    Uint32 id;
+    char *title;
+    SDL_Surface *icon;
+    int x, y;
+    int w, h;
+    int min_w, min_h;
+    int max_w, max_h;
+    Uint32 flags;
+    Uint32 last_fullscreen_flags;
+
+    /* Stored position and size for windowed mode */
+    SDL_Rect windowed;
+
+    SDL_DisplayMode fullscreen_mode;
+
+    float opacity;
+
+    float brightness;
+    Uint16 *gamma;
+    Uint16 *saved_gamma;        /* (just offset into gamma) */
+
+    SDL_Surface *surface;
+    SDL_bool surface_valid;
+
+    SDL_bool is_hiding;
+    SDL_bool is_destroying;
+    SDL_bool is_dropping;       /* drag/drop in progress, expecting SDL_SendDropComplete(). */
+
+    SDL_WindowShaper *shaper;
+
+    SDL_HitTest hit_test;
+    void *hit_test_data;
+
+    SDL_WindowUserData *data;
+
+    void *driverdata;
+
+    SDL_Window *prev;
+    SDL_Window *next;
+} SDL_Window;
+
+typedef struct SDL_DisplayData
+{
+    ViDisplay viDisplay;
+    EGLDisplay egl_display;
+} SDL_DisplayData;
+
+typedef struct SDL_DisplayModeData
+{
+} SDL_DisplayModeData;
+
+typedef struct SDL_WindowData
+{
+    ViLayer viLayer;
+    NWindow nWindow;
+    EGLSurface egl_surface;
+} SDL_WindowData;
+#endif
+
 EGLint useVsync    = 0; /** Controls on the system vsync if available. */
 EGLint useFSAA     = 0; /** Number of samples for full screen AA. 0 is off, 2/4 samples */
 
@@ -392,6 +483,8 @@ int8_t GetNativeWindow( void )
         printf( "EGL ERROR: Memory for window Failed\n" );
         return 1;
     }
+#elif defined(__SWITCH__)
+    g_nativeWindow = (NativeWindowType)&(((SDL_WindowData*)(window->driverdata))->nWindow);
 #elif defined(RPI)
     int32_t result;
     uint32_t screen_width, screen_height;

@@ -39,7 +39,7 @@ extern "C" {
 /** Defines (in every case choose only one) */
 /**     DEBUG : enable additional error monitoring per EGL function call */
 /**   Native display and window system for use with EGL */
-/**     USE_EGL_RAW : used for direct access to the framebuffer */
+/**     USE_EGL_RAW : used for direct access to the framebuffer, and for access to a SDL2 window on Switch */
 /**     USE_EGL_SDL : used for access to a X window */
 /**     USE_EGL_RPI : used for raspberry pi window */
 /**   GLES Version */
@@ -50,6 +50,7 @@ extern "C" {
 /**     WIZ     (use USE_EGL_RAW and USE_GLES1)*/
 /**     CAANOO  (use USE_EGL_RAW and USE_GLES1)*/
 /**     RPI     (use USE_EGL_RAW and USE_GLES1 or USE_GLES2)*/
+/**     SWITCH  (use USE_EGL_RAW and USE_GLES2) */
 
 /** Public API */
 void    EGL_Close                   ( void );

@@ -3,7 +3,7 @@
 #include "sdl2_to_sdl1.h"
 #include <switch.h>
 
-static SDL_Window* window = NULL;
+SDL_Window* window = NULL;
 static SDL_Texture* texture = NULL;
 static SDL_Texture* prescaled = NULL;
 static SDL_Renderer* renderer = NULL;

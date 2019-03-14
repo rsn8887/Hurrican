@@ -2,6 +2,75 @@ DEFINES := -DPLATFORM_SDL -DENABLE_CONSOLE_COMMANDS -DUSE_MODPLUG -DDEBUG
 
 TARGET = switch
 
+ifeq ($(TARGET),switch)
+
+#AR = $(PREFIX)-ar
+#RANLIB = $(PREFIX)-ranlib
+
+PROJECT_NAME := hurrican
+VERSION := 1.0
+PREFIX := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf
+CCP := $(PREFIX)-gcc
+CC  := $(PREFIX)-gcc
+LD  := $(PREFIX)-g++
+RM  := rm -f
+
+USE_EGL := yes
+USE_GL2 := yes
+
+DEFINES = \
+		-DPLATFORM_SDL \
+		-DENABLE_CONSOLE_COMMANDS \
+		-DDEBUG \
+		-ffunction-sections \
+		-ffast-math \
+		-march=armv8-a \
+		-mtune=cortex-a57 \
+		-mtp=soft \
+		-fPIE \
+		-fno-rtti \
+		-DUSE_SDL2 \
+		-D__SWITCH__ \
+		-DUSE_GL2 \
+		-DUSE_GLES2 \
+		-DUSE_EGL_RAW
+#        -Wl,-q -Wall -Wno-unused-variable -O3
+#		-DLINUX
+
+INCLUDES_OS := \
+		-I$(DEVKITPRO)/portlibs/switch/include/SDL2 \
+		-I$(DEVKITPRO)/portlibs/switch/include/GLES2 \
+		-I$(DEVKITPRO)/portlibs/switch/include \
+		-I$(DEVKITPRO)/libnx/include
+
+LDFLAGS := \
+		$(DEFINES)\
+		-specs=$(DEVKITPRO)/libnx/switch.specs \
+		-L$(DEVKITPRO)/libnx/lib \
+		-L$(DEVKITPRO)/portlibs/switch/lib \
+		-lSDL2_image \
+		-lSDL2_mixer \
+		-lSDL2_net \
+		-lSDL2 \
+		-lEGL \
+		-lGLESv2 \
+		-lglapi \
+		-ldrm_nouveau \
+		-lnx \
+		-lm \
+		-lvorbisidec \
+		-logg \
+		-lmodplug \
+		-lmpg123 \
+		-lflac \
+		-ljpeg \
+		-lfreetype \
+		-lc \
+		-lpng16 \
+		-lz \
+		-lstdc++
+endif
+
 ifeq ($(TARGET),aros)
 
 EXE := ../hurricanaros
@@ -87,77 +156,6 @@ INCLUDES_OS := -I/usr/include -I/usr/include/SDL -I/usr/include/GLES2 -I/usr/inc
 
 LDFLAGS := -g -lSDL -lGLESv2 -lSDL_mixer -lSDL_image -lmodplug -lX11 -lEGL
 
-endif
-
-ifeq ($(TARGET),switch)
-
-#AR = $(PREFIX)-ar
-#RANLIB = $(PREFIX)-ranlib
-
-PROJECT_NAME := hurrican
-VERSION := 1.0
-PREFIX := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf
-CCP := $(PREFIX)-gcc
-CC  := $(PREFIX)-gcc
-LD  := $(PREFIX)-g++
-RM  := rm -f
-
-USE_EGL := yes
-USE_GL2 := yes
-
-DEFINES = \
-		-DPLATFORM_SDL \
-		-DENABLE_CONSOLE_COMMANDS \
-		-DDEBUG \
-		-ffunction-sections \
-		-ffast-math \
-		-march=armv8-a \
-		-mtune=cortex-a57 \
-		-mtp=soft \
-		-fPIC \
-		-fno-rtti \
-		-DUSE_SDL2 \
-		-D__SWITCH__ \
-		-DUSE_GL2 \
-		-DUSE_GLES2 \
-		-DUSE_EGL_RAW
-#        -Wl,-q -Wall -Wno-unused-variable -O3
-#		-DLINUX
-
-INCLUDES_OS := \
-		-I$(DEVKITPRO)/portlibs/switch/include/SDL2 \
-		-I$(DEVKITPRO)/portlibs/switch/include/GLES2 \
-		-I$(DEVKITPRO)/portlibs/switch/include/libmodplug \
-		-I$(DEVKITPRO)/portlibs/switch/include \
-		-I$(DEVKITPRO)/libnx/include \
-
-
-LDFLAGS := \
-		$(DEFINES)\
-		-specs=$(DEVKITPRO)/libnx/switch.specs \
-		-L$(DEVKITPRO)/libnx/lib \
-		-L$(DEVKITPRO)/portlibs/switch/lib \
-		-lSDL2_image \
-		-lSDL2_mixer \
-		-lSDL2_net \
-		-lSDL2 \
-		-lEGL \
-		-lGLESv2 \
-		-lglapi \
-		-ldrm_nouveau \
-		-lnx \
-		-lm \
-		-lvorbisidec \
-		-logg \
-		-lmodplug \
-		-lmpg123 \
-		-lflac \
-		-ljpeg \
-		-lfreetype \
-		-lc \
-		-lpng16 \
-		-lz \
-		-lstdc++
 endif
 
 INCLUDES := -I. -I./SDLPort -Icml -I./unrarlib040/unrarlib $(INCLUDES_OS)
