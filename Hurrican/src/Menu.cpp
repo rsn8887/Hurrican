@@ -1854,6 +1854,17 @@ void MenuClass::DoMenu(void)
                 } else if (DirectInput.Joysticks[joy_idx].JoystickY < -Player[0].JoystickSchwelle) {
                     joy_up  = true;
                 }
+#ifdef __SWITCH__ // On Switch, also allow the Dpad buttons to control the menu
+                if (DirectInput.Joysticks[joy_idx].JoystickButtons[SWITCH_PAD_RIGHT]) {
+                    joy_right = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickButtons[SWITCH_PAD_LEFT]) {
+                    joy_left  = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickButtons[SWITCH_PAD_DOWN]) {
+                    joy_down  = true;
+                } else if (DirectInput.Joysticks[joy_idx].JoystickButtons[SWITCH_PAD_UP]) {
+                    joy_up  = true;
+                }
+#endif //__SWITCH__
 #endif //GCW
             }
 

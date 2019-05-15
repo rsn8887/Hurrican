@@ -909,7 +909,6 @@ static char InternalButtonNumToStringMap[8][10] = {
 #endif // GCW
 
 #if defined(__SWITCH__)
-#define SWITCH_MAX_BUTTONS 16
 static char InternalButtonNumToStringMap[16][10] = {
     "A",        // Button 0
     "B",
@@ -949,7 +948,7 @@ char* DirectInputClass::MapButtonToString(int joy_idx, int button)
 #endif //GCW
 #ifdef __SWITCH__
         // Special case for Switch controls:
-        if (button < SWITCH_MAX_BUTTONS)
+        if (button < SWITCH_NUM_BUTTONS)
         {
             return InternalButtonNumToStringMap[button];
         } else 
