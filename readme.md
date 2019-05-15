@@ -2,8 +2,6 @@
 
 This is my Switch port of Hurrican, a freeware jump and shoot game created by Poke53280 that is based on the Turrican game series. Blast your way through nine action-packed levels filled with different enemies and powerups.
 
-You can learn the basic controls of the game by playing the tutorial level. Just use the left stick to select "start game" and choose "play tutorial" in the main menu.
-
 Everything needed to play is already included in the archive.
 
 Port by @rsn8887.
@@ -48,6 +46,8 @@ Thanks to my supporters on Patreon: Andyways, CountDuckula, Jason Crawford, Greg
 # Current Limitations
 
  - Don't try to remap buttons in the controls menu, it asks for a button press, but doesn't react to Joycon input. The only way out is to force quit the game with the home button. If you mess up preferences, just delete `/switch/Hurrican/hurrican.cfg`
+
+ - The tutorial level (if you select "Start Tutorial" instead of "Start New Game") currently crashes just after loading.
 
 # Building
 
