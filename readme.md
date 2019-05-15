@@ -11,9 +11,9 @@ Port by @rsn8887.
 Visit my Patreon:
 https://www.patreon.com/rsn8887
 
-![](https://i.postimg.cc/TPH3VW8t/IMG-2411.jpg)
-![](https://i.postimg.cc/50fz6zVj/Open-RCT2-cc.jpg)
-![](https://i.postimg.cc/vmFfwj2r/Open-RCT2-bb.jpg)
+![]()
+![]()
+![]()
 
 # Thanks
 
