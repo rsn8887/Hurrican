@@ -55,6 +55,7 @@ cd hurrican/Hurrican/src
 make clean
 make Hurrican_switch.zip -j12
 ```
+the zip file is created in the Hurrican folder, not in src.
 
 # Changelog
 
