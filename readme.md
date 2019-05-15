@@ -14,6 +14,8 @@ https://www.patreon.com/rsn8887
 ![](/Hurrican/switchdata/screenshots/Hurrican_Switch_1.jpg)
 ![](/Hurrican/switchdata/screenshots/Hurrican_Switch_2.jpg)
 ![](/Hurrican/switchdata/screenshots/Hurrican_Switch_3.jpg)
+![](/Hurrican/switchdata/screenshots/Hurrican_Switch_4.jpg)
+![](/Hurrican/switchdata/screenshots/Hurrican_Switch_5.jpg)
 
 # Thanks
 
@@ -29,7 +31,7 @@ Thanks to my supporters on Patreon: Andyways, CountDuckula, Jason Crawford, Greg
 
 # Installation
 
-- Download (see `assets` below), and unzip hurrican_switch.zip and copy the contents over to the `/switch/` folder on your sd card, so that you have a folder `/switch/hurrican` with many folders and files inside.
+- Download (see `assets` below), and unzip `Hurrican_switch.zip` and copy the contents over to the `/switch/` folder on your sd card, so that you have a folder `/switch/Hurrican` with many folders and files inside.
 
 # Controls
 
@@ -45,7 +47,7 @@ Thanks to my supporters on Patreon: Andyways, CountDuckula, Jason Crawford, Greg
 
 # Current Limitations
 
- - Don't try to remap buttons in the controls menu, it asks for a button press, but doesn't react to Joycon input. The only way out is to force quit the game with the home button.
+ - Don't try to remap buttons in the controls menu, it asks for a button press, but doesn't react to Joycon input. The only way out is to force quit the game with the home button. If you mess up preferences, just delete `/switch/Hurrican/hurrican.cfg`
 
 # Building
 
