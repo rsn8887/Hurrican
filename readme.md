@@ -53,7 +53,7 @@ Thanks to my supporters on Patreon: Andyways, CountDuckula, Jason Crawford, Greg
 git clone https://github.com/rsn8887/hurrican
 cd hurrican/Hurrican/src
 make clean
-make hurrican_switch.zip -j12
+make Hurrican_switch.zip -j12
 ```
 
 # Changelog
