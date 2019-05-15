@@ -616,6 +616,7 @@ $(PROJECT_NAME)_switch.zip: $(PROJECT_NAME).nro
 	cp -rf ../data ../release/${PROJECT_NAME}/
 	cp -rf ../lang ../release/${PROJECT_NAME}/
 	cd ../release && zip -r ../${PROJECT_NAME}_${VERSION}_switch.zip ${PROJECT_NAME} && cd ../
+	zip -d ../${PROJECT_NAME}_${VERSION}_switch.zip *.DS_Store *__MAC* || true
 endif
 
 clean :
