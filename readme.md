@@ -19,9 +19,9 @@ https://www.patreon.com/rsn8887
 
 # Thanks
 
-Thanks to Poke53280/Eiswuxe for making such a great game, releasing the source, and making it freeware. 
+Thanks to Poke53280 team for making such a great game, releasing the source, and making it freeware. 
 
-Thanks to the other developers such as DKS/Pickle for extending the Hurrican source and adding SDL/OpenGL-ES support and more.
+Thanks to the other developers such as DKS and Pickle for extending the Hurrican source and adding SDL/OpenGL-ES support and more.
 
 Thanks to ScHlAuChi for telling me about this.
 
