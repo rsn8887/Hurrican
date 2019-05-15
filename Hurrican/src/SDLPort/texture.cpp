@@ -166,18 +166,28 @@ bool load_texture( image_t& image, GLuint &new_texture )
         glBindTexture( GL_TEXTURE_2D, texture );
 
         // Set the texture's stretching properties
+#ifdef __SWITCH__
+        // This prevents ugly pixelisation in the scaled game screen
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+#else
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-
+#endif
         //DKS - this fixes the lightning-beam drawing in low,med-detail modes..
         //      and from looking at its code in Player.cpp, I am convinced this is
         //      correct edge setting for textures for this game. My play-testing
         //      shows no unwanted side effects from the change to GL_REPEAT.
         //glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
         //glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+#ifdef __SWITCH__
+        // This prevents thin black lines from appearing between textures - rsn8887
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+#else
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-
+#endif
         if (image.compressed == true)
         {
 #if !defined(MINGW)

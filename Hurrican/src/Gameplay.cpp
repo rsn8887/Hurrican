@@ -33,6 +33,27 @@
 #include "Tileengine.h"
 #include "Timer.h"
 
+#ifdef __SWITCH__
+enum {
+    SWITCH_PAD_A        = 0,
+    SWITCH_PAD_B        = 1,
+    SWITCH_PAD_X        = 2,
+    SWITCH_PAD_Y        = 3,
+    SWITCH_PAD_LSTICK   = 4,
+    SWITCH_PAD_RSTICK   = 5,
+    SWITCH_PAD_L        = 6,
+    SWITCH_PAD_R        = 7,
+    SWITCH_PAD_ZL       = 8,
+    SWITCH_PAD_ZR       = 9,
+    SWITCH_PAD_PLUS     = 10,
+    SWITCH_PAD_MINUS    = 11,
+    SWITCH_PAD_LEFT     = 12,
+    SWITCH_PAD_UP       = 13,
+    SWITCH_PAD_RIGHT    = 14,
+    SWITCH_PAD_DOWN     = 15,
+    SWITCH_NUM_BUTTONS  = 16
+};
+#endif
 // --------------------------------------------------------------------------------------
 // Gameplay Variablen
 // --------------------------------------------------------------------------------------
@@ -649,6 +670,33 @@ void CreateDefaultControlsConfig(int player)
         Player[0].AktionKeyboard [AKTION_WAFFE_LASER]		= DIK_H;
         Player[0].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= DIK_I;
         Player[0].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_J;
+#elif defined(__SWITCH__)
+        Player[0].AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
+        Player[0].AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
+        Player[0].AktionKeyboard [AKTION_BLITZ]			= DIK_LSHIFT;
+        Player[0].AktionKeyboard [AKTION_POWERLINE]		= DIK_SPACE;
+        Player[0].AktionKeyboard [AKTION_GRANATE]		    = DIK_RCONTROL;
+        Player[0].AktionKeyboard [AKTION_SMARTBOMB]		= DIK_RSHIFT;
+        Player[0].AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
+        Player[0].AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
+        Player[0].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
+        Player[0].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_RETURN;
+
+        Player[0].AktionJoystick [AKTION_LINKS]			= SWITCH_PAD_LEFT;
+        Player[0].AktionJoystick [AKTION_RECHTS]		= SWITCH_PAD_RIGHT;
+        Player[0].AktionJoystick [AKTION_DUCKEN]		= SWITCH_PAD_DOWN;
+        Player[0].AktionJoystick [AKTION_OBEN]			= SWITCH_PAD_UP;
+        Player[0].AktionJoystick [AKTION_UNTEN]			= SWITCH_PAD_DOWN;
+        Player[0].AktionJoystick [AKTION_JUMP]			= SWITCH_PAD_B;
+        Player[0].AktionJoystick [AKTION_SHOOT]			= SWITCH_PAD_Y;
+        Player[0].AktionJoystick [AKTION_BLITZ]			= SWITCH_PAD_X;
+        Player[0].AktionJoystick [AKTION_POWERLINE]		= SWITCH_PAD_A;
+        Player[0].AktionJoystick [AKTION_GRANATE]		= SWITCH_PAD_R;
+        Player[0].AktionJoystick [AKTION_SMARTBOMB]		= SWITCH_PAD_ZR;
+        Player[0].AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        Player[0].AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        Player[0].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        Player[0].AktionJoystick [AKTION_WAFFEN_CYCLE]	= SWITCH_PAD_L;
 #else
         Player[0].AktionKeyboard [AKTION_JUMP]			= DIK_LALT;
         Player[0].AktionKeyboard [AKTION_SHOOT]			= DIK_LCONTROL;
@@ -677,15 +725,22 @@ void CreateDefaultControlsConfig(int player)
         Player[0].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
         Player[0].AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
 #endif
+#ifdef __SWITCH__
+        Player[0].Walk_UseAxxis = true;
+        Player[0].Look_UseAxxis = true;
+#else
         Player[0].Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement..
         Player[0].Look_UseAxxis = false;      // and also looking.
-
+#endif
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
         Player[0].JoystickIndex = 0;
         Player[0].JoystickSchwelle = 500.0f;
         Player[0].JoystickMode = JOYMODE_JOYPAD;
+#ifdef __SWITCH__
+        Player[0].ControlType = CONTROLTYPE_JOY;
+#else
         Player[0].ControlType = CONTROLTYPE_KEYBOARD;
-
+#endif
 #if defined(GCW)
         // On GCW Zero, the Player 1 default joy index is the internal controls and both players use joystick:
         Player[0].JoystickIndex = DirectInput.GetInternalJoystickIndex();
@@ -704,6 +759,39 @@ void CreateDefaultControlsConfig(int player)
 #endif //GCW
 
     } else {
+#ifdef __SWITCH__
+        Player[1].AktionKeyboard [AKTION_LINKS]			= DIK_A;
+        Player[1].AktionKeyboard [AKTION_RECHTS]			= DIK_D;
+        Player[1].AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
+        Player[1].AktionKeyboard [AKTION_OBEN]			= DIK_W;
+        Player[1].AktionKeyboard [AKTION_UNTEN]			= DIK_X;
+        Player[1].AktionKeyboard [AKTION_JUMP]			= DIK_G;
+        Player[1].AktionKeyboard [AKTION_SHOOT]			= DIK_H;
+        Player[1].AktionKeyboard [AKTION_BLITZ]			= DIK_J;
+        Player[1].AktionKeyboard [AKTION_POWERLINE]		= DIK_T;
+        Player[1].AktionKeyboard [AKTION_GRANATE]			= DIK_Z;
+        Player[1].AktionKeyboard [AKTION_SMARTBOMB]		= DIK_U;
+        Player[1].AktionKeyboard [AKTION_WAFFE_SPREAD]	= 0;
+        Player[1].AktionKeyboard [AKTION_WAFFE_LASER]		= 0;
+        Player[1].AktionKeyboard [AKTION_WAFFE_BOUNCE]	= 0;
+        Player[1].AktionKeyboard [AKTION_WAFFEN_CYCLE]	= DIK_Q;
+
+        Player[1].AktionJoystick [AKTION_LINKS]			= SWITCH_PAD_LEFT;
+        Player[1].AktionJoystick [AKTION_RECHTS]		= SWITCH_PAD_RIGHT;
+        Player[1].AktionJoystick [AKTION_DUCKEN]		= SWITCH_PAD_DOWN;
+        Player[1].AktionJoystick [AKTION_OBEN]			= SWITCH_PAD_UP;
+        Player[1].AktionJoystick [AKTION_UNTEN]			= SWITCH_PAD_DOWN;
+        Player[1].AktionJoystick [AKTION_JUMP]			= SWITCH_PAD_B;
+        Player[1].AktionJoystick [AKTION_SHOOT]			= SWITCH_PAD_Y;
+        Player[1].AktionJoystick [AKTION_BLITZ]			= SWITCH_PAD_X;
+        Player[1].AktionJoystick [AKTION_POWERLINE]		= SWITCH_PAD_A;
+        Player[1].AktionJoystick [AKTION_GRANATE]		= SWITCH_PAD_R;
+        Player[1].AktionJoystick [AKTION_SMARTBOMB]		= SWITCH_PAD_ZR;
+        Player[1].AktionJoystick [AKTION_WAFFE_SPREAD]	= -1;
+        Player[1].AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
+        Player[1].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
+        Player[1].AktionJoystick [AKTION_WAFFEN_CYCLE]	= SWITCH_PAD_L;
+#else
         Player[1].AktionKeyboard [AKTION_LINKS]			= DIK_A;
         Player[1].AktionKeyboard [AKTION_RECHTS]			= DIK_D;
         Player[1].AktionKeyboard [AKTION_DUCKEN]			= DIK_S;
@@ -735,17 +823,22 @@ void CreateDefaultControlsConfig(int player)
         Player[1].AktionJoystick [AKTION_WAFFE_LASER]	    = -1;
         Player[1].AktionJoystick [AKTION_WAFFE_BOUNCE]	= -1;
         Player[1].AktionJoystick [AKTION_WAFFEN_CYCLE]	= 6;
+#endif
 
+#ifdef __SWITCH__
+        Player[1].Walk_UseAxxis = true;
+        Player[1].Look_UseAxxis = true;
+#else
         Player[1].Walk_UseAxxis = false;      // By default, use the HAT switch (DPAD) for movement
         Player[1].Look_UseAxxis = false;      // and the analog stick for looking    -DKS
-
+#endif
         //DKS - Added missing default settings, and made player2's default joy index 1 instead of both being 0
         Player[1].JoystickIndex = 1;
         Player[1].JoystickSchwelle = 500.0f;
         Player[1].JoystickMode = JOYMODE_JOYPAD;
         Player[1].ControlType = CONTROLTYPE_KEYBOARD;
 
-#if defined(GCW)
+#if defined(GCW) || defined(__SWITCH__)
         // On GCW Zero, both players use joystick by default:
         Player[1].ControlType = CONTROLTYPE_JOY;
 #endif //GCW

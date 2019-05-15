@@ -332,9 +332,15 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
     }
 
 #if SDL_VERSION_ATLEAST(2,0,0)
+#ifdef __SWITCH__
+    // Create a window. Window mode MUST include SDL_WINDOW_OPENGL for use with OpenGL.
+    Window = SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                              1960, 1080, flags);
+#else
     // Create a window. Window mode MUST include SDL_WINDOW_OPENGL for use with OpenGL.
     Window = SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               ScreenWidth, ScreenHeight, flags);
+#endif
 
     // Create an OpenGL context associated with the window.
     GLcontext = SDL_GL_CreateContext(Window);
@@ -642,7 +648,11 @@ bool DirectGraphicsClass::SetDeviceInfo(void)
     g_matView.identity();
     g_matModelView.identity();
 
+#ifdef __SWITCH__
+    cml::matrix_orthographic_RH( matProjWindow, 0.0f, (float)640, (float)480, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+#else
     cml::matrix_orthographic_RH( matProjWindow, 0.0f, (float)WindowView.w, (float)WindowView.h, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
+#endif
     cml::matrix_orthographic_RH( matProjRender, 0.0f, (float)RenderView.w, (float)RenderView.h, 0.0f, 0.0f, 1.0f, cml::z_clip_neg_one );
     matProj = matProjWindow;
 
@@ -1227,12 +1237,19 @@ void DirectGraphicsClass::SetupFramebuffers( void )
     else
 #endif
     {
+#ifdef __SWITCH__
+        /* 4/3 keep aspect, centered on screen */
+        WindowView.x = 260;
+        WindowView.y = 0;
+        WindowView.w = 1440;
+        WindowView.h = 1080;
+#else
         /* No scaling just center the rendering in the window */
         WindowView.x = MAX( 0,(WindowView.w-RenderView.w)/2 );
         WindowView.y = MAX( 0,(WindowView.h-RenderView.h)/2 );
         WindowView.w = RenderView.w;
         WindowView.h = RenderView.h;
-
+#endif
 #if defined(PANDORA)
         WindowView.x = 80;
         WindowView.y = 0;

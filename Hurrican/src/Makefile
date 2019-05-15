@@ -81,7 +81,6 @@ USE_NO_EXCEPTIONS := yes
 DEFINES = -DUSE_INDEXED_BATCH \
 		-DPLATFORM_SDL \
 		-DENABLE_CONSOLE_COMMANDS \
-		-DDEBUG \
 		-march=armv8-a+crc+crypto \
 		-mtune=cortex-a57 \
 		-mtp=soft \
@@ -93,6 +92,7 @@ DEFINES = -DUSE_INDEXED_BATCH \
 		-std=c++17 \
 		-D__SWITCH__ \
 		-DUSE_GLES2
+#		-DDEBUG
 #		-DUSE_MODPLUG
 #		-DS905
 #        -Wl,-q -Wall -Wno-unused-variable -O3
