@@ -388,5 +388,9 @@ bool DirectJoystickClass::ButtonMenuPressed(void)
 	if (strcmp (JoystickName, "PLAYSTATION(R)3 Controller") == 0)
 		return JoystickButtons[3];
 	else
+#ifdef __SWITCH__
+	    return JoystickButtons[10];   // use plus button to pause on Switch
+#else
 	    return JoystickButtons[9];   // Default is button 9
+#endif
 }

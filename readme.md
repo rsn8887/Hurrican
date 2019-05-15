@@ -42,10 +42,13 @@ Thanks to my supporters on Patreon: Andyways, CountDuckula, Jason Crawford, Greg
  - R = grenade
  - L = cycle weapon type 
  - ZR = smart bomb
+ - Plus = pause (breaks music)
 
 # Current Limitations
 
  - Don't try to remap buttons in the controls menu, it asks for a button press, but doesn't react to Joycon input.
+
+ - pausing with plus button causes the music to stop and never start again.
 
 # Building
 

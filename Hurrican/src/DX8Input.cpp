@@ -908,6 +908,29 @@ static char InternalButtonNumToStringMap[8][10] = {
 };
 #endif // GCW
 
+#if defined(__SWITCH__)
+#define SWITCH_MAX_BUTTONS 16
+static char InternalButtonNumToStringMap[16][10] = {
+    "A",        // Button 0
+    "B",
+    "X",
+    "Y",
+    "L3",
+    "R3",
+    "L",
+    "R",
+    "ZL",
+    "ZR",
+    "Plus",
+    "Minus",
+    "Pad Left",
+    "Pad Right",
+    "Pad Up",
+    "Pad Down"
+};
+#endif // __SWITCH__
+
+
 //DKS - Added helper function to facilitate customized naming of joystick buttons and
 //      when not customized, to report joy buttons as ranging 1..99 instead of 0..98
 char* DirectInputClass::MapButtonToString(int joy_idx, int button)
@@ -924,6 +947,13 @@ char* DirectInputClass::MapButtonToString(int joy_idx, int button)
             return InternalButtonNumToStringMap[button];
         } else 
 #endif //GCW
+#ifdef __SWITCH__
+        // Special case for Switch controls:
+        if (button < SWITCH_MAX_BUTTONS)
+        {
+            return InternalButtonNumToStringMap[button];
+        } else 
+#endif //__SWITCH__
             // Non-platform-specific generic code for all joysticks:
         {
             // Report button numbers as ranging from 1..99 instead of 0..98
