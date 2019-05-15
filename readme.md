@@ -11,9 +11,9 @@ Port by @rsn8887.
 Visit my Patreon:
 https://www.patreon.com/rsn8887
 
-![]()
-![]()
-![]()
+![](/Hurrican/switchdata/screenshots/Hurrican_Switch_1.jpg)
+![](/Hurrican/switchdata/screenshots/Hurrican_Switch_2.jpg)
+![](/Hurrican/switchdata/screenshots/Hurrican_Switch_3.jpg)
 
 # Thanks
 
