@@ -25,7 +25,7 @@ Thanks to ScHlAuChi for telling me about this.
 
 Thanks to devkitPro for making Switch homebrew possible.
 
-Thanks to my supporters on Patreon: Andyways, CountDuckula, Jason Crawford, Greg Gibson, Jesse Harlin, Özgür Karter, Matthew Machnee, Milenko, and RadicalR.
+Thanks to my supporters on Patreon: Andyways, CountDuckula, Greg Gibson, Jesse Harlin, Duncan Harris, Ã–zgÃ¼r Karter, Matthew Machnee, Mored1984, Ibrahim Fazel Poor, and RadicalR.
 
 # Installation
 
@@ -60,6 +60,9 @@ make Hurrican_switch.zip -j12
 the zip file is created in the Hurrican folder, not in src.
 
 # Changelog
+v1.01
+
+- Re-compiled with 9.0.0 support
 
 v1.00
 
