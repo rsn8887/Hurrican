@@ -125,9 +125,12 @@ LDFLAGS := \
 		-logg \
 		-lmodplug \
 		-lmpg123 \
+		-lopusfile \
+		-lopus \
 		-lflac \
 		-ljpeg \
 		-lpng16 \
+		-lwebp \
 		-lz
 endif
 
