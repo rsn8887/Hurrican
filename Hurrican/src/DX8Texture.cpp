@@ -82,7 +82,11 @@ int16_t TexturesystemClass::LoadTexture( const std::string &filename )
         _loaded_textures.push_back(th);
         idx = _loaded_textures.size()-1;
         // Create entry in _texture_map mapping texture's filename to the new _loaded_textures index
+#ifdef __SWITCH__
+        _texture_map.insert(std::map<std::string, int16_t>::value_type(filename, idx));
+#else
         _texture_map[filename] = idx;
+#endif
     }
         
     TextureHandle &th = _loaded_textures[idx];

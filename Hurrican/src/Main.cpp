@@ -72,6 +72,10 @@
 #include <android/log.h>
 #endif
 
+#ifdef __SWITCH__
+#include "Switch.h"
+#endif
+
 using namespace std;
 
 // Memory Leaks
@@ -577,7 +581,10 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE hprevinstace,
 int main(int argc, char *argv[])
 {
 #endif
-
+#ifdef __SWITCH__
+socketInitializeDefault();
+nxlinkStdio();
+#endif
     GamePaused = false;
 
 #if defined(PLATFORM_DIRECTX)
