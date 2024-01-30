@@ -335,7 +335,7 @@ bool DirectGraphicsClass::Init(HWND hwnd, DWORD dwBreite, DWORD dwHoehe,
 #ifdef __SWITCH__
     // Create a window. Window mode MUST include SDL_WINDOW_OPENGL for use with OpenGL.
     Window = SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              1960, 1080, flags);
+                              1920, 1080, flags);
 #else
     // Create a window. Window mode MUST include SDL_WINDOW_OPENGL for use with OpenGL.
     Window = SDL_CreateWindow("Hurrican", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
@@ -1239,7 +1239,7 @@ void DirectGraphicsClass::SetupFramebuffers( void )
     {
 #ifdef __SWITCH__
         /* 4/3 keep aspect, centered on screen */
-        WindowView.x = 260;
+        WindowView.x = 240;
         WindowView.y = 0;
         WindowView.w = 1440;
         WindowView.h = 1080;
