@@ -84,14 +84,18 @@ DEFINES = -DUSE_INDEXED_BATCH \
 		-march=armv8-a+crc+crypto \
 		-mtune=cortex-a57 \
 		-mtp=soft \
-		-fPIC \
 		-ftls-model=local-exec \
+		-fPIE \
+		-g \
+		-Wall \
 		-O2 \
 		-ffunction-sections \
 		-fdata-sections \
-		-std=c++17 \
+		-fno-rtti \
+		-fno-exceptions \
 		-D__SWITCH__ \
-		-DUSE_GLES2
+		-DUSE_GLES2 \
+		-flto
 #		-DDEBUG
 #		-DUSE_MODPLUG
 #		-DS905
@@ -111,6 +115,8 @@ LDFLAGS := \
 		-specs=$(DEVKITPRO)/libnx/switch.specs \
 		-L$(DEVKITPRO)/libnx/lib \
 		-L$(DEVKITPRO)/portlibs/switch/lib \
+		-O2 \
+		-flto \
 		-lSDL2_image \
 		-lSDL2_mixer \
 		-lSDL2_net \
