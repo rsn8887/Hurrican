@@ -25,6 +25,8 @@ Thanks to ScHlAuChi for telling me about this.
 
 Thanks to devkitPro for making Switch homebrew possible.
 
+Thanks to DeltaV on Nintenbrew Discord for finding the joystick array overflow bug.
+
 Thanks to my Patreon supporters: Jesse Harlin, Mored4u, RadicalR.
 
 # Installation
@@ -58,6 +60,10 @@ make Hurrican_switch.zip -j12
 the zip file is created in the Hurrican folder, not in src.
 
 # Changelog
+v1.04
+
+- Fixed joystick array overflow to properly fix crashes (thanks DeltaV)
+
 v1.03
 
 - Fixed crashes in tutorial and later

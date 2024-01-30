@@ -67,7 +67,7 @@ ifeq ($(TARGET),switch)
 #RANLIB = $(PREFIX)-ranlib
 
 PROJECT_NAME := Hurrican
-VERSION := 1.03
+VERSION := 1.04
 PREFIX := $(DEVKITPRO)/devkitA64/bin/aarch64-none-elf
 CXX := $(PREFIX)-g++
 CC  := $(PREFIX)-gcc
