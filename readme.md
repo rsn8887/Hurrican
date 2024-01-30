@@ -25,7 +25,7 @@ Thanks to ScHlAuChi for telling me about this.
 
 Thanks to devkitPro for making Switch homebrew possible.
 
-Thanks to my Patreon supporters: Andyways, Count Duckula, Jesse Harlin, Thomas Luten, Matthew Machnee, Mored4u, Ibrahim Fazel Poor, RadicalR.
+Thanks to my Patreon supporters: Jesse Harlin, Mored4u, RadicalR.
 
 # Installation
 
@@ -47,8 +47,6 @@ Thanks to my Patreon supporters: Andyways, Count Duckula, Jesse Harlin, Thomas L
 
  - Don't try to remap buttons in the controls menu, it asks for a button press, but doesn't react to Joycon input. The only way out is to force quit the game with the home button. If you mess up preferences, just delete `/switch/Hurrican/hurrican.cfg`
 
- - The tutorial level (if you select "Start Tutorial" instead of "Start New Game") currently crashes just after loading.
-
 # Building
 
 ```
@@ -60,6 +58,10 @@ make Hurrican_switch.zip -j12
 the zip file is created in the Hurrican folder, not in src.
 
 # Changelog
+v1.03
+
+- Fixed crashes in tutorial and later
+
 v1.02
 
 - Re-compiled with 12.0.0 support
