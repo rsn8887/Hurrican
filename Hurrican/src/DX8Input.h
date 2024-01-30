@@ -69,7 +69,7 @@ enum {
 #define	FFE_BIGRUMBLE 2
 #define	FFE_BLITZ 3
 
-#define MAX_JOYSTICKS 4
+#define MAX_JOYSTICKS 8
 //DKS - Fixed ambiguity: The game had ControlType and JoystickMode both using this #define, but
 //      that was confusing and mixed up in the code:  Now, JoystickMode uses this define and
 //      ControlType uses the one following it:
